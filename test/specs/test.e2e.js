@@ -2,32 +2,41 @@ import { faker } from '@faker-js/faker'
 import SwagPage from '../pageobjects/swag.page'
 
 
-describe('My Login application', () => {
+describe('My Test Task', () => {
     it('should login with valid credentials', async () => {
         const firstName = faker.person.firstName()
         const lastName = faker.person.lastName()
         const zipCode = faker.location.zipCode()
 
+        const productPrice = 9.99;
+
         await SwagPage.open()
-        SwagPage.setswagUsernameInputValue('standard_user')
-        SwagPage.setswagPasswordInputValue('secret_sauce')
-        SwagPage.clickLoginButton()
-        SwagPage.verifyTitle('Swag Title')
-        SwagPage.clickAddToCartButton()
-        SwagPage.verifyCartQuantity('1')
-        SwagPage.clickCartButton()
-        SwagPage.verifyUrl('https://www.saucedemo.com/cart.html')
-        SwagPage.clickCheckoutButton()
-        SwagPage.checkoutform.isExisting()
-        SwagPage.setswagFirstnameInputValue(firstName)
-        SwagPage.setswagLastnameInputValue(lastName)
-        SwagPage.setswagZipInputValue(zipCode)
-        SwagPage.clickContinueButton()
-        SwagPage.verifyUrl('https://www.saucedemo.com/checkout-step-two.html')
-        SwagPage.clickFinishButton()
-        SwagPage.verifyUrl('https://www.saucedemo.com/checkout-complete.html')
-        SwagPage.clickBackHomeButton()
-        SwagPage.verifyUrl('https://www.saucedemo.com/inventory.html')
+        await SwagPage.setswagUsernameInputValue('standard_user')
+        await SwagPage.setswagPasswordInputValue('secret_sauce')
+        await SwagPage.clickLoginButton()
+        const productName =  await SwagPage.getProductNameText()
+         SwagPage.verifyTitle('Swag Title')
+        await SwagPage.clickAddToCartButton()
+         SwagPage.verifyCartQuantity('1')
+        await SwagPage.clickCartButton()
+         SwagPage.verifyUrl('https://www.saucedemo.com/cart.html')
+        await SwagPage.clickCheckoutButton()
+        await SwagPage.checkoutform.isExisting()
+        await SwagPage.setswagFirstnameInputValue(firstName)
+        await SwagPage.setswagLastnameInputValue(lastName)
+        await SwagPage.setswagZipInputValue(zipCode)
+        await SwagPage.clickContinueButton()
+         SwagPage.verifyUrl('https://www.saucedemo.com/checkout-step-two.html')
+         SwagPage.verifyProductName(productName)
+        const total = productPrice * 1.08
+
+         SwagPage.verifyTotalPrice(total)
+        await SwagPage.clickFinishButton()
+         SwagPage.verifyUrl('https://www.saucedemo.com/checkout-complete.html')
+
+        await SwagPage.clickBackHomeButton()
+         SwagPage.verifyUrl('https://www.saucedemo.com/inventory.html')
+         SwagPage.cartQuantity.isExisting() === false
     })
 })
 
