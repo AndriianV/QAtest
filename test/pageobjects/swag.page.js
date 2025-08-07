@@ -131,6 +131,9 @@ class SwagPage {
     await   this.finishButton.click()
     }
 
+     get thanksform(){
+        return $('#checkout_complete_container > h2')
+      }
 
       get backHomeButton(){
       return $('#back-to-products')

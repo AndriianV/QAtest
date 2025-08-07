@@ -33,10 +33,11 @@ describe('My Test Task', () => {
          SwagPage.verifyTotalPrice(total)
         await SwagPage.clickFinishButton()
          SwagPage.verifyUrl('https://www.saucedemo.com/checkout-complete.html')
-
+        await SwagPage.thanksform.isExisting()
         await SwagPage.clickBackHomeButton()
          SwagPage.verifyUrl('https://www.saucedemo.com/inventory.html')
-         SwagPage.cartQuantity.isExisting() === false
+        const cartQuantity = await $('#shopping_cart_container > a > span')
+        await expect(cartQuantity).not.toBeExisting();
     })
 })
 
